@@ -1,22 +1,22 @@
 import PropTypes from "prop-types";
-export default function NavBar({
-  handlePrevious,
-  handleNext,
-  pokemonIndex,
-  pokemonListLength,
-}) {
+
+export default function NavBar({ pokemonList, setPokemonIndex }) {
   return (
     <div>
-      {pokemonIndex > 0 && <button onClick={handlePrevious}>Précédent</button>}
-      {pokemonIndex < pokemonListLength - 1 && (
-        <button onClick={handleNext}>Suivant</button>
-      )}
+      {pokemonList.map((pokemon, index) => (
+        <button key={pokemon.name} onClick={() => setPokemonIndex(index)}>
+          {pokemon.name}
+        </button>
+      ))}
     </div>
   );
 }
+
 NavBar.propTypes = {
-  handlePrevious: PropTypes.func.isRequired,
-  handleNext: PropTypes.func.isRequired,
-  pokemonIndex: PropTypes.number.isRequired,
-  pokemonListLength: PropTypes.number.isRequired,
+  pokemonList: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  setPokemonIndex: PropTypes.func.isRequired,
 };
